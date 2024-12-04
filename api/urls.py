@@ -1,9 +1,12 @@
-from rest_framework.routers import DefaultRouter
-from .views import InstructorViewSet, CourseViewSet, LessonViewSet
+from django.urls import path
+from . import views
 
-router = DefaultRouter()
-router.register('instructors', InstructorViewSet, basename='instructor')
-router.register('courses', CourseViewSet, basename='course')
-router.register('lessons', LessonViewSet, basename='lesson')
 
-urlpatterns = router.urls
+urlpatterns = [
+    path('instructors/', views.InstructorListCreateAPIView.as_view()),
+    path('instructors/<int:pk>/', views.InstructorViewSet.as_view()),
+    path('courses/', views.CourseListCreateAPIView.as_view()),
+    path('courses/<int:pk>/', views.CourseViewSet.as_view()),
+    path('lessons/', views.LessonListCreateAPIView.as_view()),
+    path('lessons/<int:pk>/', views.LessonViewSet.as_view())
+]
