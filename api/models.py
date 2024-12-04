@@ -87,6 +87,9 @@ class Course(models.Model):
             if self.start_date > self.end_date:
                 raise ValidationError({'end_date': "End date must be after the start date."})
 
+    def __str__(self):
+        return f"Course: {self.title}, instructor: {self.instructor.name}"
+
 
 class Lesson(models.Model):
     title = models.CharField(max_length=255)
@@ -104,3 +107,6 @@ class Lesson(models.Model):
 
         if self.order <= 0:
             raise ValidationError({'order': "The serial number must be positive."})
+
+    def __str__(self):
+        return f"Lesson: {self.title}, course: {self.course.title}"
