@@ -36,7 +36,7 @@ def clean_field(
 
 class Instructor(models.Model):
 
-    PROFESSION_CHOICES = [
+    SPECIALTY_CHOICES = [
         ('director', 'Director'),
         ('product_manager', 'Product Manager'),
         ('team_lead', 'Team Leader'),
@@ -53,7 +53,7 @@ class Instructor(models.Model):
 
     name = models.CharField(max_length=255)
     email = models.EmailField(unique=True)
-    profession = models.CharField(max_length=19, choices=PROFESSION_CHOICES)
+    specialty = models.CharField(max_length=19, choices=SPECIALTY_CHOICES)
 
     def clean(self):
         """
@@ -62,17 +62,17 @@ class Instructor(models.Model):
 
         self.name = clean_field(self.name, 'name', title_case=True)
         self.email = clean_field(self.email, 'email', skip_length_validation=True)
-        self.profession = clean_field(self.profession, 'profession')
+        self.specialty = clean_field(self.specialty, 'specialty')
 
     def __str__(self):
-        return f"{self.name} ({self.profession})"
+        return f"{self.name} ({self.specialty})"
 
 
 class Course(models.Model):
     title = models.CharField(max_length=255)
     description = models.TextField()
-    started_date = models.DateField()
-    ended_date = models.DateField()
+    start_date = models.DateField()
+    end_date = models.DateField()
     instructor = models.ForeignKey(Instructor, on_delete=models.CASCADE, related_name='courses')
 
     def clean(self):
@@ -83,16 +83,16 @@ class Course(models.Model):
         self.title = clean_field(self.title, 'title', title_case=True)
         self.description = clean_field(self.description, 'description', min_length=12)
 
-        if self.started_date and self.ended_date:
-            if self.started_date > self.ended_date:
-                raise ValidationError({'ended_date': "End date must be after the start date."})
+        if self.start_date and self.end_date:
+            if self.start_date > self.end_date:
+                raise ValidationError({'end_date': "End date must be after the start date."})
 
 
 class Lesson(models.Model):
     title = models.CharField(max_length=255)
     content = models.TextField()
     course = models.ForeignKey(Course, on_delete=models.CASCADE, related_name='lessons')
-    serial_number = models.IntegerField()
+    order = models.IntegerField()
 
     def clean(self):
         """
@@ -102,5 +102,5 @@ class Lesson(models.Model):
         self.title = clean_field(self.title, 'title', title_case=True)
         self.content = clean_field(self.content, 'content', min_length=12)
 
-        if self.serial_number <= 0:
-            raise ValidationError({'serial_number': "The serial number must be positive."})
+        if self.order <= 0:
+            raise ValidationError({'order': "The serial number must be positive."})
