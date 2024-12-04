@@ -4,7 +4,11 @@
 ### For the Mentor
 This project was created purely for practice. At this stage, I did not use certain tools to improve code readability and organization, focusing instead on the logic of the tasks.
 
-The code was written manually: I did not use AI to generate the logic but only to search for the necessary information. In the future, I plan to make the code more readable, well-organized, and optimized.
+The code was written manually: I did not use AI to generate the logic but only to search for the necessary information.
+
+Additionally, I have recently learned about docstrings and wrote the docstrings for this project myself. Moving forward, I plan to consistently use them to improve code clarity and documentation.
+
+In the future, I aim to make the code more readable, well-organized, and optimized.
 
 ### Project description
 The homework for a mentor <a href="https://github.com/abdullaabdukulov">Abdulla Abdukulov (GitHub Profile)</a>
